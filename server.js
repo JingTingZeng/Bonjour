@@ -122,7 +122,10 @@ io.on('connection',function(socket){
 });
 
 app.get('/', function(req, res){
- 	res.render('pages/index1');
+	var note = "";
+ 	res.render('pages/login',{
+ 		tagline_login: note
+ 	});
 });
 
 //login page
@@ -147,7 +150,7 @@ app.post('/loginform', function(req, res){
 		        tagline_login: note
 		    });
 		}else{
-		    res.render('pages/index1');
+		    res.render('pages/index');
 		}
 	});
 });
@@ -174,7 +177,7 @@ app.post('/logonform', function(req, res){
 		        id: req.body.id,
 		        password: req.body.pw,
 		    }).key;
-		    res.render('pages/index1');
+		    res.render('pages/index');
 		}else{
 		    
 		    var note = "--此ID已存在--";
