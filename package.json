@@ -17,9 +17,4 @@
     "url": "https://github.com/JingTingZeng/Bonjour/issues"
   },
   "homepage": "https://github.com/JingTingZeng/Bonjour#readme",
-  "dependencies":{
-    "express":"^4.14.0",
-    "ejs":"latest",
-    "socket.io":"latest"
-  }
 }
