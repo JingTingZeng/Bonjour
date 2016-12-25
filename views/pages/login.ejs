@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<% include ../partials/head %>
+	
+</head>
+<body>
+	<div class="wrap">
+		<header><h1>Bonjour</h1></header>
+		<main>
+			<h2>Login</h2>
+			<p class="note"><%= tagline_login %></p>
+			<form action="/loginform" method="post">
+				<input class="input" type="text" placeholder="User ID" name="login_id" id="login_id"></br>
+				<input class="input" type="password" placeholder="Password" name="login_pw" id="login_pw"></br>
+				<button>登入</button></br>
+			</form>
+
+			<span class="logon"><a href="logon">註冊新ID</a></span>
+		</main>
+    </div>
+    <footer>
+	        <% include ../partials/footer %>
+	    </footer>
+</body>
+</html>
