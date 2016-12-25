@@ -41,6 +41,16 @@ io.on('connection',function(socket){
  	});
 });
 
+//login page
+ app.get('/login', function(req, res){
+ 	res.render('pages/login');
+ });  
+
+  app.get('/logon', function(req, res){
+ 	res.render('pages/logon');
+ });
+
+
 http.listen(process.env.PORT || 3000, function() {  
   console.log('Listening on port 3000');  
 });
