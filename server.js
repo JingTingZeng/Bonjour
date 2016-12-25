@@ -3,14 +3,60 @@ var express = require('express');
 var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
-
-app.set('view engine', 'ejs');  
+var firebase = require("firebase");
+app.set('view engine', 'ejs');
+app.use(express.static(__dirname + '/public')); 
 // app.set('port', (process.env.PORT || 3000));
+
+var config = {
+    		apiKey: "AIzaSyByKsrnp_Cpvf5A_HgireonTXolgCcwsKk",
+    		authDomain: "bonjour-61159.firebaseapp.com",
+    		databaseURL: "https://bonjour-61159.firebaseio.com",
+    		storageBucket: "bonjour-61159.appspot.com",
+    		messagingSenderId: "136270025924"
+ };
+firebase.initializeApp(config);
+// 建立 DB
+var database = firebase.database();
+database.ref('board/goosip/').update({
+	boardid:"b1",
+	boardname:"八卦版"
+});
+database.ref('board/sport/').update({
+	boardid:"b2",
+	boardname:"運動版",
+});
+database.ref('board/news/').update({
+	id:"b3",
+	boardname:"新聞版"
+});
+database.ref('board/fashion/').update({
+	id:"b4",
+	boardname:"時尚版",
+});
+database.ref('board/music/').update({
+	id:"b5",
+	boardname:"音樂版",
+});
+database.ref('board/game/').update({
+	id:"b6",
+	boardname:"遊戲版",
+});
+database.ref('board/movie/').update({
+	id:"b7",
+	boardname:"電影版"
+});
+database.ref('board/trip/').update({
+	id:"b8",
+	boardname:"旅遊版",
+});
 
 app.get('/', function(req, res){
  	res.render('pages/index');
 });
-
+app.get('/chat', function(req, res){
+ 	res.render('pages/chat');
+});
 // var user_count=0;
 
 //當新的使用者進入聊天室
