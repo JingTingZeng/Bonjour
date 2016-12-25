@@ -85,7 +85,7 @@ database.ref('board/trip/').update({
 	boardname:"旅遊版",
 });
 
-app.get('/', function(req, res){
+app.get('/index', function(req, res){
  	res.render('pages/index');
 });
 app.get('/chat', function(req, res){

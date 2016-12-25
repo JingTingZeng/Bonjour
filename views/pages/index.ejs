@@ -45,27 +45,27 @@
 		}
     </style>
     
-	<script src="https://www.gstatic.com/firebasejs/3.6.4/firebase.js"></script>
+	<!-- <script src="https://www.gstatic.com/firebasejs/3.6.4/firebase.js"></script> -->
 	<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 	<script>
-        var config = {
-    		apiKey: "AIzaSyByKsrnp_Cpvf5A_HgireonTXolgCcwsKk",
-    		authDomain: "bonjour-61159.firebaseapp.com",
-    		databaseURL: "https://bonjour-61159.firebaseio.com",
-    		storageBucket: "bonjour-61159.appspot.com",
-    		messagingSenderId: "136270025924"
-  		};
-		firebase.initializeApp(config);
-		// 建立 DB
-		var database = firebase.database();
-		function addBoard(boardId,boardname,member,message){
-			database.ref('board/'+boardId).push({
-				boardname:boardname,
-				member:member,
-				message:message
-			});
-		}
+  //       var config = {
+  //   		apiKey: "AIzaSyByKsrnp_Cpvf5A_HgireonTXolgCcwsKk",
+  //   		authDomain: "bonjour-61159.firebaseapp.com",
+  //   		databaseURL: "https://bonjour-61159.firebaseio.com",
+  //   		storageBucket: "bonjour-61159.appspot.com",
+  //   		messagingSenderId: "136270025924"
+  // 		};
+		// firebase.initializeApp(config);
+		// // 建立 DB
+		// var database = firebase.database();
+		// function addBoard(boardId,boardname,member,message){
+		// 	database.ref('board/'+boardId).push({
+		// 		boardname:boardname,
+		// 		member:member,
+		// 		message:message
+		// 	});
+		// }
 		
 	</script>
 </head>
