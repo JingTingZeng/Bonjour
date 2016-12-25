@@ -18,9 +18,13 @@ var config = {
 firebase.initializeApp(config);
 // 建立 DB
 var database = firebase.database();
+// database.ref('user/').push({
+// 	id:"hobby",
+// 	password:"qqqq",
+// }).key;
 database.ref('board/goosip/').update({
-	boardid:"b1",
-	boardname:"八卦版"
+	boardid:"b",
+	boardname:"八卦版",
 });
 database.ref('board/sport/').update({
 	boardid:"b2",
