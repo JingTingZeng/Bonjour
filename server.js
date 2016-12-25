@@ -43,9 +43,9 @@ var config = {
  firebase.initializeApp(config);
  var database = firebase.database();
 
-var firebase = require("firebase");
-app.set('view engine', 'ejs');
-app.use(express.static(__dirname + '/public')); 
+// var firebase = require("firebase");
+// app.set('view engine', 'ejs');
+// app.use(express.static(__dirname + '/public')); 
 // app.set('port', (process.env.PORT || 3000));
 
 // database.ref('user/').push({
@@ -93,7 +93,7 @@ app.get('/chat', function(req, res){
 });
 // var user_count=0;
 
-當新的使用者進入聊天室
+//當新的使用者進入聊天室
 io.on('connection',function(socket){
 	//新user
  	socket.on('add user',function(msg){
