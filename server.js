@@ -29,7 +29,7 @@ app.use( static( path.join( __dirname, 'public' )));
 
 // load the things we need
 
-var http = require('http').Server(app);
+// var http = require('http').Server(app);
 
 /*****************FIREBASE*****************/
 var firebase = require("firebase");
@@ -43,6 +43,7 @@ var config = {
  firebase.initializeApp(config);
  var database = firebase.database();
 
+
 // var firebase = require("firebase");
 // app.set('view engine', 'ejs');
 // app.use(express.static(__dirname + '/public')); 
@@ -52,6 +53,10 @@ var config = {
 // 	id:"hobby",
 // 	password:"qqqq",
 // }).key;
+
+
+     
+
 database.ref('board/goosip/').update({
 	boardid:"b",
 	boardname:"八卦版",
@@ -122,7 +127,10 @@ io.on('connection',function(socket){
 });
 
 app.get('/', function(req, res){
- 	res.render('pages/index1');
+	var note = "";
+ 	res.render('pages/login',{
+ 		tagline_login: note
+ 	});
 });
 
 //login page
@@ -147,7 +155,7 @@ app.post('/loginform', function(req, res){
 		        tagline_login: note
 		    });
 		}else{
-		    res.render('pages/index1');
+		    res.render('pages/index');
 		}
 	});
 });
@@ -174,7 +182,7 @@ app.post('/logonform', function(req, res){
 		        id: req.body.id,
 		        password: req.body.pw,
 		    }).key;
-		    res.render('pages/index1');
+		    res.render('pages/index');
 		}else{
 		    
 		    var note = "--此ID已存在--";
@@ -185,7 +193,6 @@ app.post('/logonform', function(req, res){
 		}
 	});
 });
-
 
 http.listen(process.env.PORT || 3000, function() {  
   console.log('Listening on port 3000');  
