@@ -27,6 +27,7 @@ app.set('port', (process.env.PORT || 3000));
 //設定預設指定目錄
 app.use( static( path.join( __dirname, 'public' )));
 
+
 /*****************FIREBASE*****************/
 var firebase = require("firebase");
 var config = {
@@ -38,7 +39,22 @@ var config = {
  firebase.initializeApp(config);
  var database = firebase.database();
 
+
+
+// var firebase = require("firebase");
+// app.set('view engine', 'ejs');
+// app.use(express.static(__dirname + '/public')); 
+// app.set('port', (process.env.PORT || 3000));
+
+// database.ref('user/').push({
+// 	id:"hobby",
+// 	password:"qqqq",
+// }).key;
+
+
      
+
+
 database.ref('board/goosip/').update({
 	boardid:"b",
 	boardname:"八卦版",
@@ -175,7 +191,6 @@ app.post('/logonform', function(req, res){
 		}
 	});
 });
-
 
 http.listen(process.env.PORT || 3000, function() {  
   console.log('Listening on port 3000');  
