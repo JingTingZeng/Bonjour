@@ -8,12 +8,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/hobbyling/Bonjour_test.git"
+    "url": "git+https://github.com/JingTingZeng/Bonjour.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/hobbyling/Bonjour_test/issues"
+    "url": "https://github.com/JingTingZeng/Bonjour/issues"
   },
-  "homepage": "https://github.com/hobbyling/Bonjour_test#readme"
+  "homepage": "https://github.com/JingTingZeng/Bonjour#readme"
 }
