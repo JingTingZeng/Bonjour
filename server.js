@@ -27,22 +27,16 @@ app.set('port', (process.env.PORT || 3000));
 //設定預設指定目錄
 app.use( static( path.join( __dirname, 'public' )));
 
-// load the things we need
-
-// var http = require('http').Server(app);
-
 /*****************FIREBASE*****************/
 var firebase = require("firebase");
 var config = {
-   	apiKey: "AIzaSyByKsrnp_Cpvf5A_HgireonTXolgCcwsKk",
-    authDomain: "bonjour-61159.firebaseapp.com",
-  	databaseURL: "https://bonjour-61159.firebaseio.com",
-    storageBucket: "bonjour-61159.appspot.com",
-    messagingSenderId: "136270025924"
+   apiKey: "AIzaSyD0isme4EL9lNEjL0jHsmSrR8XScPYl3mk",
+   authDomain: "bonjour-5d9d0.firebaseapp.com",
+   databaseURL: "https://bonjour-5d9d0.firebaseio.com",
+   storageBucket: "bonjour-5d9d0.appspot.com"
  };
  firebase.initializeApp(config);
  var database = firebase.database();
-
 
      
 database.ref('board/goosip/').update({
@@ -136,7 +130,7 @@ app.post('/loginform', function(req, res){
  	firebase.database().ref().child('/user').orderByChild('id').equalTo(req.body.login_id).on('value',function(snapshot){
  		var data = snapshot.val();
 		console.log(snapshot.val());
-
+		console.log(snapshop.val()==null);
  		if(snapshot.val() == null){
 			var note = "--ID或密碼輸入錯誤!--";
 			res.render('pages/login', {
@@ -181,6 +175,7 @@ app.post('/logonform', function(req, res){
 		}
 	});
 });
+
 
 http.listen(process.env.PORT || 3000, function() {  
   console.log('Listening on port 3000');  
