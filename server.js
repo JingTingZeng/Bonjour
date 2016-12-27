@@ -27,21 +27,18 @@ app.set('port', (process.env.PORT || 3000));
 //設定預設指定目錄
 app.use( static( path.join( __dirname, 'public' )));
 
-// load the things we need
-
-// var http = require('http').Server(app);
 
 /*****************FIREBASE*****************/
 var firebase = require("firebase");
 var config = {
-   	apiKey: "AIzaSyByKsrnp_Cpvf5A_HgireonTXolgCcwsKk",
-    authDomain: "bonjour-61159.firebaseapp.com",
-  	databaseURL: "https://bonjour-61159.firebaseio.com",
-    storageBucket: "bonjour-61159.appspot.com",
-    messagingSenderId: "136270025924"
+   apiKey: "AIzaSyD0isme4EL9lNEjL0jHsmSrR8XScPYl3mk",
+   authDomain: "bonjour-5d9d0.firebaseapp.com",
+   databaseURL: "https://bonjour-5d9d0.firebaseio.com",
+   storageBucket: "bonjour-5d9d0.appspot.com"
  };
  firebase.initializeApp(config);
  var database = firebase.database();
+
 
 
 // var firebase = require("firebase");
@@ -56,6 +53,7 @@ var config = {
 
 
      
+
 
 database.ref('board/goosip/').update({
 	boardid:"b",
