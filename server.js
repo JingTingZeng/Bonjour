@@ -56,7 +56,7 @@ var config = {
 
 
 database.ref('board/goosip/').update({
-	boardid:"b",
+	boardid:"b1",
 	boardname:"八卦版",
 });
 database.ref('board/sport/').update({
@@ -64,35 +64,56 @@ database.ref('board/sport/').update({
 	boardname:"運動版",
 });
 database.ref('board/news/').update({
-	id:"b3",
+	boardid:"b3",
 	boardname:"新聞版"
 });
 database.ref('board/fashion/').update({
-	id:"b4",
+	boardid:"b4",
 	boardname:"時尚版",
 });
 database.ref('board/music/').update({
-	id:"b5",
+	boardid:"b5",
 	boardname:"音樂版",
 });
 database.ref('board/game/').update({
-	id:"b6",
+	boardid:"b6",
 	boardname:"遊戲版",
 });
 database.ref('board/movie/').update({
-	id:"b7",
+	boardid:"b7",
 	boardname:"電影版"
 });
 database.ref('board/trip/').update({
-	id:"b8",
+	boardid:"b8",
 	boardname:"旅遊版",
 });
 
 app.get('/index', function(req, res){
  	res.render('pages/index');
 });
-app.get('/chat', function(req, res){
- 	res.render('pages/chat');
+app.get('/goosip', function(req, res){
+ 	res.render('pages/goosip');
+});
+app.get('/sport', function(req, res){
+ 	res.render('pages/sport');
+});
+app.get('/news', function(req, res){
+ 	res.render('pages/news');
+});
+app.get('/fashion', function(req, res){
+ 	res.render('pages/fashion');
+});
+app.get('/music', function(req, res){
+ 	res.render('pages/music');
+});
+app.get('/game', function(req, res){
+ 	res.render('pages/game');
+});
+app.get('/movie', function(req, res){
+ 	res.render('pages/movie');
+});
+app.get('/trip', function(req, res){
+ 	res.render('pages/trip');
 });
 // var user_count=0;
 
