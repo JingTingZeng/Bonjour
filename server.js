@@ -52,38 +52,38 @@ var config = {
 // }).key;
 
 
-// database.ref('board/goosip/').update({
-// 	boardid:"b1",
-// 	boardname:"八卦版"
-// });
-// database.ref('board/sport/').update({
-// 	boardid:"b2",
-// 	boardname:"運動版"
-// });
-// database.ref('board/news/').update({
-// 	boardid:"b3",
-// 	boardname:"新聞版"
-// });
-// database.ref('board/fashion/').update({
-// 	boardid:"b4",
-// 	boardname:"時尚版"
-// });
-// database.ref('board/music/').update({
-// 	boardid:"b5",
-// 	boardname:"音樂版"
-// });
-// database.ref('board/game/').update({
-// 	boardid:"b6",
-// 	boardname:"遊戲版"
-// });
-// database.ref('board/movie/').update({
-// 	boardid:"b7",
-// 	boardname:"電影版"
-// });
-// database.ref('board/trip/').update({
-// 	boardid:"b8",
-// 	boardname:"旅遊版"
-// });
+database.ref('board/goosip/').update({
+	boardid:"b1",
+	boardname:"八卦版"
+});
+database.ref('board/sport/').update({
+	boardid:"b2",
+	boardname:"運動版"
+});
+database.ref('board/news/').update({
+	boardid:"b3",
+	boardname:"新聞版"
+});
+database.ref('board/fashion/').update({
+	boardid:"b4",
+	boardname:"時尚版"
+});
+database.ref('board/music/').update({
+	boardid:"b5",
+	boardname:"音樂版"
+});
+database.ref('board/game/').update({
+	boardid:"b6",
+	boardname:"遊戲版"
+});
+database.ref('board/movie/').update({
+	boardid:"b7",
+	boardname:"電影版"
+});
+database.ref('board/trip/').update({
+	boardid:"b8",
+	boardname:"旅遊版"
+});
 
 app.get('/index', function(req, res){
  	res.render('pages/index');
@@ -112,6 +112,10 @@ app.get('/movie', function(req, res){
 app.get('/trip', function(req, res){
  	res.render('pages/trip');
 });
+app.get('/one', function(req, res){
+ 	res.render('pages/one');
+});
+
 // var user_count=0;
 
 //當新的使用者進入聊天室
