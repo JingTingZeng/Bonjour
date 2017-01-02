@@ -143,7 +143,7 @@
             var message = snapshot.val();
             $('#messages').empty();
             $.each(snapshot.val(),function(k,v){
-                display_msg(k,v.name, v.msg);
+                display_msg(k,v.senderName, v.text);
             });
     });
 	var socket = io();
@@ -197,14 +197,6 @@
 				<a href="/index">HOME</a>
 			</div>
 			<div id="clear"></div>
-      <div class="info">
-            <input type="hidden" id="username" value="hobby"/>
-      </div>
-      <div id="online-count">
-        <p id="num">
-          在線人數:<span>0</span>
-        </p>
-      </div>
 			<ul id="user_name">
         <li></li>
       </ul>
