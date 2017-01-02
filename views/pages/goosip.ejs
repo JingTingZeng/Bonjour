@@ -89,15 +89,15 @@
           if(content.substring(0,1) === '@' && content.indexOf(':') != -1){   //private message  format:  @user:
             var index = content.indexOf(':');
             if(content[index-1] != " "){
-            var touser = content.substring(1,index);  //userName
-            var content1 = content.substr(index+1);
-            var fromuser = name
-            socket.emit("say_private",fromuser,touser,content1);    //私聊
+              var touser = content.substring(1,index);  //userName
+              var content1 = content.substr(index+1);
+              var fromuser = name
+              socket.emit("say_private",fromuser,touser,content1);    //私聊
             }else{ 
-            socket.emit("chat message",content);   // 群聊
+              socket.emit("chat message",content);   // 群聊
             }
           }else{
-              socket.emit("say",content);   // 正常群聊 给服务器提交数据 提供处理
+              socket.emit("chat message",content);   // 正常群聊 给服务器提交数据 提供处理
           }
           $('#m').val('');
           return false;
