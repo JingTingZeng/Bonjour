@@ -242,7 +242,7 @@ app.get('/one', function(req, res){
 });
 
 
-// var user_count=0;
+var users=new Array();
 
 //當新的使用者進入聊天室
 io.on('connection',function(socket){
@@ -253,8 +253,10 @@ io.on('connection',function(socket){
  		io.emit('add user',{
  			username:socket.username
  		});
+ 		users.push('msg');//在線上的
  	});
  	//監聽新訊息事件
+ 	//群聊
  	socket.on('chat message',function(msg){
  		console.log(socket.username+":"+msg);
  		//發佈新訊息
@@ -263,6 +265,15 @@ io.on('connection',function(socket){
  			msg:msg
  		});
  	});
+ 	//私聊
+ 	socket.on("say_private",function(fromuser,touser,msg){
+        // console.log('I received a private message by ', fromuser, ' say to ',touser, msg);  
+    	if(touser in users){  
+       	 	socket.emit("say_private_done",touser,msg);   //訊息返回给fromuser
+        	toSocket.emit("sayToYou",fromuser,msg);     // 訊息返回给 touser
+        	console.log(fromuser+" 给 "+touser+"發了訊息： "+msg); 
+    	}  
+    });
  	//離開聊天室
  	socket.on('disconnect',function(){
  		console.log(socket.username+"left.");

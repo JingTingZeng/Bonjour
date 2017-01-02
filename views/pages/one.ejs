@@ -121,8 +121,10 @@
         }
         console.log(rid);
         var name = rid;
+        var touser="hey";
+        var message="hi";
         socket.emit("add user",name);
-        // socket.emit("add user","我")
+        
         //監聽新訊息事件
         socket.on('chat_one message', function(data){
           appendMessage(data.user+" : "+data.msg);
@@ -130,6 +132,9 @@
         });
         socket.on('login',function(data){
           appendUser(data.user+" 在線上");
+        });
+        socket.on('say_private', function (touser,data) {  
+          appendMessage(data.name+" : "+data.msg);  
         });
         // socket.on('user left',function(data){
         //   $('#user').empty();
