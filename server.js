@@ -267,8 +267,14 @@ io.on('connection',function(socket){
  	});
  	//私聊
  	socket.on("say_private",function(fromuser,touser,msg){
-        // console.log('I received a private message by ', fromuser, ' say to ',touser, msg);  
-    	if(touser in users){  
+        // console.log('I received a private message by ', fromuser, ' say to ',touser, msg);
+        var toSocket = "";
+		for(var n in users){ 
+			if(users[n].name === touser){     
+				toSocket = users[n].Socket;
+			}
+		}  
+    	if(toSocket != ""){  
        	 	socket.emit("say_private_done",touser,msg);   //訊息返回给fromuser
         	toSocket.emit("sayToYou",fromuser,msg);     // 訊息返回给 touser
         	console.log(fromuser+" 给 "+touser+"發了訊息： "+msg); 
