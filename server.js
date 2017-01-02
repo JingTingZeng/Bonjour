@@ -9,6 +9,7 @@ var bodyParser = require('body-parser');
 var favicon = require('serve-favicon');
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
+var session = require('express-session');
 
 // router設定
  // var page = require('./routes/page');
@@ -17,6 +18,19 @@ var io = require('socket.io')(http);
 // 讓回傳的值可以解析 json與 urlencoded
 app.use(bodyParser.json()); 
 app.use(bodyParser.urlencoded({ extended: true}));
+app.use(session({secret: 'ssshhhhh',saveUninitialized: true,resave: true}));
+
+var sess;
+//session
+
+// app.use(session({
+// 	secret: 'keyboard cat', // 用来对session id相关的cookie进行签名
+//   	saveUninitialized: true,  // 是否自动保存未初始化的会话，建议false
+//   	resave: false,  // 是否每次都重新保存会话，建议false
+//     cookie: {
+//         maxAge: 10 * 1000  // 有效期，单位是毫秒
+//     }
+// }));
 
 // 版型設定
 app.use(partials());
@@ -27,30 +41,16 @@ app.set('port', (process.env.PORT || 3000));
 //設定預設指定目錄
 app.use( static( path.join( __dirname, 'public' )));
 
-
 /*****************FIREBASE*****************/
 var firebase = require("firebase");
 var config = {
-   apiKey: "AIzaSyByKsrnp_Cpvf5A_HgireonTXolgCcwsKk",
-   authDomain: "bonjour-61159.firebaseapp.com",
-   databaseURL: "https://bonjour-61159.firebaseio.com",
-   storageBucket: "bonjour-61159.appspot.com"
+   apiKey: "AIzaSyD0isme4EL9lNEjL0jHsmSrR8XScPYl3mk",
+   authDomain: "bonjour-5d9d0.firebaseapp.com",
+   databaseURL: "https://bonjour-5d9d0.firebaseio.com",
+   storageBucket: "bonjour-5d9d0.appspot.com"
  };
  firebase.initializeApp(config);
  var database = firebase.database();
-
-
-
-// var firebase = require("firebase");
-// app.set('view engine', 'ejs');
-// app.use(express.static(__dirname + '/public')); 
-// app.set('port', (process.env.PORT || 3000));
-
-// database.ref('user/').push({
-// 	id:"hobby",
-// 	password:"qqqq",
-// }).key;
-
 
 database.ref('board/goosip/').update({
 	boardid:"b1",
@@ -85,36 +85,162 @@ database.ref('board/trip/').update({
 	boardname:"旅遊版"
 });
 
+app.get('/', function(req, res){
+ 	var note = "";
+ 	
+ 	if(req.session.sign == true){
+		res.render('pages/index');
+	}else{
+		res.render('pages/login',{
+	 		tagline_login: note
+ 		});
+ 	}
+});
+
 app.get('/index', function(req, res){
- 	res.render('pages/index');
+ 	var note = "";
+ 	if(req.session.sign == true){
+		res.redirect('pages/index');
+		// res.render('pages/index');
+	}else{
+		res.render('pages/login',{
+	 		tagline_login: note
+ 		});
+ 	}
 });
+
 app.get('/goosip', function(req, res){
- 	res.render('pages/goosip');
+	console.log("session sign:"+req.session.sign);
+	console.log("session name:"+req.session.name);
+	var note = "請登入";
+	// res.render('pages/goosip',{
+	// 	// session: req.session.name
+	// });
+ 	if(req.session.sign){
+		res.render('pages/goosip');
+	}else{
+		res.render('pages/login',{
+	 		tagline_login: note
+ 		});
+ 	}
 });
-app.get('/sport', function(req, res){
- 	res.render('pages/sport');
-});
-app.get('/news', function(req, res){
- 	res.render('pages/news');
-});
+
 app.get('/fashion', function(req, res){
- 	res.render('pages/fashion');
+	console.log("session sign:"+req.session.sign);
+	console.log("session name:"+req.session.name);
+	var note = "請登入";
+	// res.render('pages/goosip',{
+	// 	// session: req.session.name
+	// });
+ 	if(req.session.sign){
+		res.render('pages/fashion');
+	}else{
+		res.render('pages/login',{
+	 		tagline_login: note
+ 		});
+ 	}
 });
-app.get('/music', function(req, res){
- 	res.render('pages/music');
-});
+
 app.get('/game', function(req, res){
- 	res.render('pages/game');
+	console.log("session sign:"+req.session.sign);
+	console.log("session name:"+req.session.name);
+	var note = "請登入";
+	// res.render('pages/goosip',{
+	// 	// session: req.session.name
+	// });
+ 	if(req.session.sign){
+		res.render('pages/game');
+	}else{
+		res.render('pages/login',{
+	 		tagline_login: note
+ 		});
+ 	}
 });
+
 app.get('/movie', function(req, res){
- 	res.render('pages/movie');
+	console.log("session sign:"+req.session.sign);
+	console.log("session name:"+req.session.name);
+	var note = "請登入";
+	// res.render('pages/goosip',{
+	// 	// session: req.session.name
+	// });
+ 	if(req.session.sign){
+		res.render('pages/movie');
+	}else{
+		res.render('pages/login',{
+	 		tagline_login: note
+ 		});
+ 	}
 });
+
+app.get('/music', function(req, res){
+	console.log("session sign:"+req.session.sign);
+	console.log("session name:"+req.session.name);
+	var note = "請登入";
+	// res.render('pages/goosip',{
+	// 	// session: req.session.name
+	// });
+ 	if(req.session.sign){
+		res.render('pages/music');
+	}else{
+		res.render('pages/login',{
+	 		tagline_login: note
+ 		});
+ 	}
+});
+
+app.get('/news', function(req, res){
+	console.log("session sign:"+req.session.sign);
+	console.log("session name:"+req.session.name);
+	var note = "請登入";
+	// res.render('pages/goosip',{
+	// 	// session: req.session.name
+	// });
+ 	if(req.session.sign){
+		res.render('pages/news');
+	}else{
+		res.render('pages/login',{
+	 		tagline_login: note
+ 		});
+ 	}
+});
+
+app.get('/sport', function(req, res){
+	console.log("session sign:"+req.session.sign);
+	console.log("session name:"+req.session.name);
+	var note = "請登入";
+	// res.render('pages/goosip',{
+	// 	// session: req.session.name
+	// });
+ 	if(req.session.sign){
+		res.render('pages/sport');
+	}else{
+		res.render('pages/login',{
+	 		tagline_login: note
+ 		});
+ 	}
+});
+
 app.get('/trip', function(req, res){
- 	res.render('pages/trip');
+	console.log("session sign:"+req.session.sign);
+	console.log("session name:"+req.session.name);
+	var note = "請登入";
+	// res.render('pages/goosip',{
+	// 	// session: req.session.name
+	// });
+ 	if(req.session.sign){
+		res.render('pages/trip');
+	}else{
+		res.render('pages/login',{
+	 		tagline_login: note
+ 		});
+ 	}
 });
+
 app.get('/one', function(req, res){
  	res.render('pages/one');
 });
+
 
 // var user_count=0;
 
@@ -146,13 +272,6 @@ io.on('connection',function(socket){
  	});
 });
 
-app.get('/', function(req, res){
-	var note = "";
- 	res.render('pages/login',{
- 		tagline_login: note
- 	});
-});
-
 //login page
  app.get('/login', function(req, res){
  	var note = "";
@@ -163,23 +282,28 @@ app.get('/', function(req, res){
 
 //取得登入表單資料
 app.post('/loginform', function(req, res){
-	console.log(req.body.login_id);
- 	console.log(req.body.login_pw);
+	console.log("id:"+req.body.login_id);
+ 	console.log("pw:"+req.body.login_pw);
+
  	database.ref('/user/').orderByChild("id").equalTo(req.body.login_id).on('value',function(snapshot){
  		var data = JSON.stringify(snapshot.val());  //將陣列轉換成字串
  		var result1  = data.indexOf("\"id\":\""+req.body.login_id+"\"");   //將陣列與ID進行比對
  		var result2  = data.indexOf("\"password\":\""+req.body.login_pw+"\"");   //將陣列與ID進行比對
- 		console.log(data);
- 		console.log(result1);
- 		console.log(result2);
-
+ 		console.log("data:"+data);
+ 		console.log(result1+" & "+result2);
+ 		
  		if(result1 == -1 || result2 == -1){
 			var note = "--ID或密碼輸入錯誤!--";
 			res.render('pages/login', {
 		        tagline_login: note
 		    });
 		}else{
-		    res.render('pages/index');
+			req.session.sign = true;
+			req.session.name = req.body.login_id;
+			console.log("session name:"+req.session.name);
+		    res.render('pages/index',{
+		    	loginid: req.session.name
+		    });
 		}
 	});
 });
@@ -192,11 +316,13 @@ app.post('/loginform', function(req, res){
  	});
  });
 
+
 //取得註冊表單資料
 app.post('/logonform', function(req, res){
 	console.log(req.body.id);
  	console.log(req.body.pw);
- 	database.ref('/user/').orderByChild("id").equalTo(req.body.id).on('value',function(snapshot){
+ 
+ 	database.ref('/user/').equalTo(req.body.id).on('value',function(snapshot){
  		var data = JSON.stringify(snapshot.val());  //將陣列轉換成字串
  		var result  = data.indexOf("\"id\":\""+req.body.id+"\"");   //將陣列與輸入值進行比對
  		console.log("\"id\":\""+req.body.id+"\"");
@@ -211,18 +337,36 @@ app.post('/logonform', function(req, res){
 		    });
 		}else{
 		    console.log('ID不存在');
-		    res.render('pages/index');
+		    req.session.sign = true;
+			req.session.name = req.body.id;
+			console.log("session name:"+req.session.name);
+		    res.render('pages/index',{
+		    	loginid: req.session.name
+		    });
+		    
 			//將表單資料寫入資料庫
 		 	firebase.database().ref('user/').push({
 		        id: req.body.id,
 		        password: req.body.pw,
 		    }).key;
-		    console.log('ID已新建');    
+		    console.log('ID已新建');
+		    return; 
 		}
 	});
 });
 
+app.post('/backhome', function(req, res){
+	console.log("session sign:"+req.session.sign);
+	console.log("session name:"+req.session.name);
+ 	res.render('pages/index',{
+ 		loginid: req.session.name
+ 	});
+});
+
 app.post('/logout', function(req, res){
+	req.session.sign = false;
+	console.log("session sign:"+req.session.sign);
+	console.log("session name:"+req.session.name);
 	var note = "";
  	res.render('pages/login',{
  		tagline_login: note
