@@ -60,8 +60,10 @@
 
         //tell server
         socket.emit("add user",name);
+        for (var i = 0; i < users.length; i++) {
+            appendUser(users[i]);
+        }
         
-
         //監聽新訊息事件
         socket.on('chat message', function(data){
           appendMessage(data.username+" : "+data.msg);
@@ -71,9 +73,7 @@
         socket.on('add user',function(data){
           users.push(data.username);
           // appendUser(data.username);
-          for (var i = 0; i < users.length; i++) {
-            appendUser(users[i]);
-          }
+          
         });
         
         socket.on('user left',function(data){
