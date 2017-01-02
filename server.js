@@ -246,9 +246,15 @@ var users=new Array();
 
 //當新的使用者進入聊天室
 io.on('connection',function(socket){
+	var user = { 
+		Socket: socket,
+		name: '----'
+    };
 	//新user
  	socket.on('add user',function(msg){
  		socket.username=msg;
+ 		user.name = socket.username;                    // 接收user name
+      	users.push(user); 
  		console.log("new user:"+msg+"logged.");
  		io.emit('add user',{
  			username:socket.username
@@ -270,10 +276,11 @@ io.on('connection',function(socket){
         // console.log('I received a private message by ', fromuser, ' say to ',touser, msg);
         var toSocket = "";
 		for(var n in users){ 
-			if(users[n] === touser){     
+			if(users[n].name === touser){     
 				toSocket = users[n].Socket;
 			}
-		}  
+		} 
+		console.log("toSocket:  "+toSocket.id); 
     	if(toSocket != ""){  
        	 	socket.emit("say_private_done",touser,msg);   //訊息返回给fromuser
         	toSocket.emit("sayToYou",fromuser,msg);     // 訊息返回给 touser
