@@ -56,6 +56,7 @@
         }
         console.log(rid);
         var name = rid;
+        var users = new Array();
 
         //tell server
         socket.emit("add user",name);
@@ -66,11 +67,14 @@
           appendMessage(data.username+" : "+data.msg);
           addMessage(data.username,data.msg);
         });
-            
+        //列出在線的人    
         socket.on('add user',function(data){
-          appendUser(data.username);
+          users.push(data.username);
+          // appendUser(data.username);
         });
-
+        for (var i = 0; i < users.length; i++) {
+          appendUser(users[i]);
+        }
         socket.on('user left',function(data){
           // appendUser(data.username+" 已離開");
           removeUser(data.username);

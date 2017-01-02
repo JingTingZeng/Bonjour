@@ -253,7 +253,7 @@ io.on('connection',function(socket){
  		io.emit('add user',{
  			username:socket.username
  		});
- 		users.push('msg');//在線上的
+ 		users.push(msg);//在線上的
  	});
  	//監聽新訊息事件
  	//群聊
