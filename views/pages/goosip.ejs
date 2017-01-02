@@ -88,7 +88,7 @@
           message.scrollTop = message.scrollHeight;
         }
         function appendUser(user){
-          $('#user_name').append($('<li id='+ user +'>'+ user +'</li>'));
+          $('#user_name').append($('<li id='+ user +'><a href="/one" id=chat_to_'+ user +'>'+ user +'</a></li>'));
           // $('#user_name').append($('<li>').text(user));
           var user = document.getElementById("user");
           user.scrollTop = user.scrollHeight;
