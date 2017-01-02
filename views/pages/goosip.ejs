@@ -64,7 +64,7 @@
         
         //監聽新訊息事件
         socket.on('chat message', function(data){
-          // appendMessage(data.username+" : "+data.msg);
+          appendMessage(data.username+" : "+data.msg);
           addMessage(data.username,data.msg);
         });
         //列出在線的人    
@@ -99,10 +99,10 @@
               var fromuser = name;
               socket.emit("say_private",fromuser,touser,content1);    //私聊
             }else{ 
-              socket.emit("chat message",content);   // 群聊
+              // socket.emit("chat message",content);   // 群聊
             }
           }else{
-              socket.emit("chat message",content);   // 正常群聊 给服务器提交数据 提供处理
+              socket.emit("chat message",content);   // 正常群聊 
           }
           $('#m').val('');
           return false;
