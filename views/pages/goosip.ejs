@@ -41,6 +41,7 @@
             });
     });
 	var socket = io();
+  var users = new Array();
       $(document).ready(function(){
         // var name = prompt("請輸入你的名字","訪客");
         // if(name=="" || name==null){
@@ -56,7 +57,7 @@
         }
         console.log(rid);
         var name = rid;
-        var users = new Array();
+        
 
         //tell server
         socket.emit("add user",name);
@@ -99,7 +100,7 @@
               var fromuser = name;
               socket.emit("say_private",fromuser,touser,content1);    //私聊
             }else{ 
-              // socket.emit("chat message",content);   // 群聊
+              socket.emit("chat message",content);   // 群聊
             }
           }else{
               socket.emit("chat message",content);   // 正常群聊 
