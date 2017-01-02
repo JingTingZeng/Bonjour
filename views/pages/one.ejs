@@ -111,7 +111,17 @@
         //   name = "訪客";
         // }
         //tell server
-        socket.emit("add user","訪客");
+        //擷取網址列的id值
+        var url = location.search;
+        var rid;
+        if(url.indexOf("?") != -1) {
+          var str = url.substr(1);
+          // str.split("=")[0] 為 userID
+          rid = str.split("=")[1];
+        }
+        console.log(rid);
+        var name = rid;
+        socket.emit("add user",name);
         // socket.emit("add user","我")
         //監聽新訊息事件
         socket.on('chat_one message', function(data){
