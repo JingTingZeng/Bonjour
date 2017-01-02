@@ -120,7 +120,7 @@
           message.scrollTop = message.scrollHeight;
         }
         function appendUser(user){
-          $('#user_name').append($('<li id='+ user +'><a href="#" id=chat_to_'+ user +'>'+ user +'</a></li>'));
+          $('#user_name').append($('<li id='+ user +'>'+ user +'</li>'));
           // $('#user_name').append($('<li>').text(user));
           var user = document.getElementById("user");
           user.scrollTop = user.scrollHeight;
@@ -152,7 +152,7 @@
     	<div id="message_block">
         	<ul id="messages"></ul>
     	</div>
-        	<input id="m" placeholder="我想說..." autocomplete="off" /><button id="send">Send</button>
+        	<input id="m" placeholder="我想說...(私訊格式:@user:hi)" autocomplete="off" /><button id="send">Send</button>
   </div>  
 </body>
 </html>
