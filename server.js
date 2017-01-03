@@ -44,10 +44,10 @@ app.use( static( path.join( __dirname, 'public' )));
 /*****************FIREBASE*****************/
 var firebase = require("firebase");
 var config = {
-   apiKey: "AIzaSyD0isme4EL9lNEjL0jHsmSrR8XScPYl3mk",
-   authDomain: "bonjour-5d9d0.firebaseapp.com",
-   databaseURL: "https://bonjour-5d9d0.firebaseio.com",
-   storageBucket: "bonjour-5d9d0.appspot.com"
+   apiKey: "AIzaSyByKsrnp_Cpvf5A_HgireonTXolgCcwsKk",
+   authDomain: "bonjour-61159.firebaseapp.com",
+   databaseURL: "https://bonjour-61159.firebaseio.com",
+   storageBucket: "bonjour-61159.appspot.com"
  };
  firebase.initializeApp(config);
  var database = firebase.database();
@@ -346,7 +346,7 @@ app.post('/logonform', function(req, res){
 	console.log(req.body.id);
  	console.log(req.body.pw);
  
- 	database.ref('/user/').equalTo(req.body.id).on('value',function(snapshot){
+ 	database.ref('/user/').orderByChild("id").equalTo(req.body.id).on('value',function(snapshot){
  		var data = JSON.stringify(snapshot.val());  //將陣列轉換成字串
  		var result  = data.indexOf("\"id\":\""+req.body.id+"\"");   //將陣列與輸入值進行比對
  		console.log("\"id\":\""+req.body.id+"\"");
