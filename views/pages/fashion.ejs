@@ -41,12 +41,12 @@
             });
     });
 	var socket = io();
+  var users = new Array();
       $(document).ready(function(){
         // var name = prompt("請輸入你的名字","訪客");
         // if(name=="" || name==null){
         //   name = "訪客";
         // }
-
         //擷取網址列的id值
         var url = location.search;
         var rid;
@@ -57,27 +57,58 @@
         }
         console.log(rid);
         var name = rid;
+        
 
         //tell server
         socket.emit("add user",name);
+        
+        
         //監聽新訊息事件
         socket.on('chat message', function(data){
           appendMessage(data.username+" : "+data.msg);
           addMessage(data.username,data.msg);
         });
+        //列出在線的人    
         socket.on('add user',function(data){
-          appendUser(data.username);
+          users.push(data.username);
+          // appendUser(data.username);
+          for (var i = 0; i < users.length; i++) {
+            appendUser(users[i]);
+          }  
         });
+        
         socket.on('user left',function(data){
           // appendUser(data.username+" 已離開");
           removeUser(data.username);
         });
+        socket.on("sayToYou",function(fromuser,content){ 
+          appendMessage(fromuser+" 私訊你 : "+content);
+        });
+        socket.on("say_private_done",function(touser,content){ 
+          appendMessage("你已私訊"+touser+" : "+content);
+        });
         $('#send').click(function(){
-          var text = $('#m').val();
-          socket.emit('chat message', text);
+          var content = $("#m").val();   //獲得消息
+          if(content == ""){ 
+            return;
+          }
+          if(content.substring(0,1) === '@' && content.indexOf(':') != -1){   //private message  format:  @user:
+            var index = content.indexOf(':');
+            if(content[index-1] != " "){
+              var touser = content.substring(1,index);  //userName
+              var content1 = content.substr(index+1);
+              var fromuser = name;
+              socket.emit("say_private",fromuser,touser,content1);    //私聊
+            }else{ 
+              socket.emit("chat message",content);   // 群聊
+            }
+          }else{
+              socket.emit("chat message",content);   // 正常群聊 
+          }
           $('#m').val('');
           return false;
         });
+
         $("#m").keydown(function(event){
           if ( event.which == 13 ){
             $('#send').click();
