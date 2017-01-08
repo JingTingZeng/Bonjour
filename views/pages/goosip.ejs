@@ -16,9 +16,18 @@
 	firebase.initializeApp(config);
 	// 建立 DB
 	var database = firebase.database();
-	function addBoardMember(userId){
-		database.ref('board/goosip/member/'+userId).push({
-			username:username
+  function addSendMessage(senderName,username,msg){
+    database.ref('/user/').orderByChild("id").equalTo(senderName).ref('message/').push({
+      // database.ref('/message/').push({
+        username:username,
+        msg:msg
+      // });
+    });
+  }
+	function addRecieveMessage(senderName,msg){
+		database.ref('/user/').orderByChild("id").equalTo(senderName).push({
+			senderName:senderName,
+      msg:msg
 		});
 	}
 	function addMessage(senderName,text){
@@ -33,6 +42,17 @@
         var message = document.getElementById("message_block");
         message.scrollTop = message.scrollHeight;
     }
+    function display_send_msg(id, name, msg){
+        $('#messages').append($('<li>').text("你私訊"+name+" : "+msg));
+        var message = document.getElementById("message_block");
+        message.scrollTop = message.scrollHeight;
+    }
+    function display_recieve_msg(id, name, msg){
+        $('#messages').append($('<li>').text(name+"私訊你 : "+msg));
+        var message = document.getElementById("message_block");
+        message.scrollTop = message.scrollHeight;
+    }
+  
 	database.ref('board/goosip/message/').once('value').then(function(snapshot) {
             var message = snapshot.val();
             $('#messages').empty();
@@ -62,12 +82,17 @@
         }
         console.log(rid);
         var name = rid;
-        
+        //撈自己的私訊
+        database.ref('/user/').orderByChild("id").equalTo(name).on('value',function(snapshot) {
+          var message = snapshot.val();
+          $('#messages').empty();
+          $.each(snapshot.val(),function(k,v){
+              display_send_msg(k,v.username,v.msg);
+              display_recieve_msg(k,v.senderName,v.msg);
+          });
+        });
 
         //tell server
-        
-        users.push("name");
-        
         socket.emit("add user",name);
         
         
@@ -78,26 +103,25 @@
         });
         //列出在線的人    
         socket.on('add user',function(data){
-          for(var i=0;i<users.length;i++){
-            if(user[i] !== data.username){
-              users.push(data.username);
-              appendUser(data.username);
-            }
-          }
-          
-            
+          appendUser(data.username);
+          users.push(data.username);
         });
-        
+        for(var i=0;i<users.length;i++){
+            // if(user[i] !== data.username){
+              appendUser(data.username);
+            // }
+          }
         socket.on('user left',function(data){
           // appendUser(data.username+" 已離開");
           removeUser(data.username);
         });
         socket.on("sayToYou",function(fromuser,content){ 
           appendMessage(fromuser+" 私訊你 : "+content);
-          // addMessage(fromuser,content);
+          addRecieveMessage(fromuser,content);
         });
-        socket.on("say_private_done",function(touser,content){ 
+        socket.on("say_private_done",function(fromuser,touser,content){ 
           appendMessage("你已私訊"+touser+" : "+content);
+          addSendMessage(fromuser,touser,name);
         });
         $('#send').click(function(){
           var content = $("#m").val();   //獲得消息
@@ -126,6 +150,7 @@
             $('#send').click();
           }
         });
+
         function appendMessage(msg){
           $('#messages').append($('<li>').text(msg));
           var message = document.getElementById("message_block");

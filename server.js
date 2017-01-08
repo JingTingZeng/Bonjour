@@ -282,7 +282,7 @@ io.on('connection',function(socket){
 		} 
 		console.log("toSocket:  "+toSocket.id); 
     	if(toSocket != ""){  
-       	 	socket.emit("say_private_done",touser,msg);   //訊息返回给fromuser
+       	 	socket.emit("say_private_done",fromuser,touser,msg);   //訊息返回给fromuser
         	toSocket.emit("sayToYou",fromuser,msg);     // 訊息返回给 touser
         	console.log(fromuser+" 给 "+touser+"發了訊息： "+msg); 
     	}  
@@ -372,6 +372,7 @@ app.post('/logonform', function(req, res){
 		 	firebase.database().ref('user/').push({
 		        id: req.body.id,
 		        password: req.body.pw,
+		        message:message
 		    }).key;
 		    console.log('ID已新建');
 		    return; 
