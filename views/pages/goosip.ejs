@@ -73,7 +73,7 @@
         //列出在線的人 
            
         socket.on('add user',function(data){
-          $('#username li').remove();
+          $('#user_name li').remove();
           users.push(data.username);
           // appendUser(data.username);
           for (var i = 0; i < users.length; i++) {
