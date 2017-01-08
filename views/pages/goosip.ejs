@@ -70,19 +70,21 @@
           appendMessage(data.username+" : "+data.msg);
           addMessage(data.username,data.msg);
         });
-        //列出在線的人 
-           
+        //列出在線的人            
         socket.on('add user',function(data){
-          $('#user_name li').remove();
+          var list = document.getElementById("user_name");
+          list.remove();
+          
           // appendUser(data.username);
           for (var i = 0; i < users.length; i++) {
-              if(user[i] !== data.username){
-                appendUser(users[i]);
+              if(data.username !== user[i]){
                 users.push(data.username);
+                appendUser(users[i]);
+                return false;
               }
-          }
+              appendUser(users[i]);
+          } 
           return false;
-            
         });
         
         socket.on('user left',function(data){
