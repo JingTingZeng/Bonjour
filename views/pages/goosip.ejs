@@ -74,7 +74,7 @@
         socket.on('add user',function(data){
           // var list = document.getElementById("user_name");
           // list.remove();
-          
+          users.push(data.username);
           // appendUser(data.username);
           for (var i = 0; i < users.length; i++) {
               if(data.username !== user[i]){
