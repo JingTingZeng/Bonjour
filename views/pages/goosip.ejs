@@ -74,8 +74,7 @@
         socket.on('add user',function(data){
           users.push(data.username);
           //清空
-          var list = document.getElementById("user_name");
-          list.remove();
+          $('#user_name li').remove();
           // appendUser(data.username);
           for (var i = 0; i < users.length; i++) {
             appendUser(users[i]);
