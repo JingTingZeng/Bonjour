@@ -72,6 +72,7 @@
         });
         //列出在線的人
         socket.on('usernames',function(data){
+          $('#user_name li').remove();
           for(var i=0;i<data.length;i++){
               appendUser(data[i]);
           }
