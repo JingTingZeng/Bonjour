@@ -33,7 +33,7 @@
         var message = document.getElementById("message_block");
         message.scrollTop = message.scrollHeight;
     }
-	database.ref('board/sport/message/').once('value').then(function(snapshot) {
+	database.ref('board/sport/message/').on('child_added',function(snapshot) {
             var message = snapshot.val();
             $('#messages').empty();
             $.each(snapshot.val(),function(k,v){
