@@ -291,10 +291,11 @@ io.on('connection',function(socket){
  	//離開聊天室
  	socket.on('disconnect',function(){
  		console.log(socket.username+"left.");
- 		io.emit('user left',{
- 			username:socket.username
- 		});
- 		users.remove(socket.username)
+ 		// io.emit('user left',{
+ 		// 	username:socket.username
+ 		// });
+ 		users.remove(socket.username);
+ 		io.emit('user left',users);
  	});
 });
 

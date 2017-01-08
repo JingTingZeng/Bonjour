@@ -79,8 +79,12 @@
         })            
         
         socket.on('user left',function(data){
+          $('#user_name li').remove();
+          for(var i=0;i<data.length;i++){
+              appendUser(data[i]);
+          }
           // appendUser(data.username+" 已離開");
-          removeUser(data.username);
+          // removeUser(data.username);
         });
         socket.on("sayToYou",function(fromuser,content){ 
           appendMessage(fromuser+" 私訊你 : "+content);
