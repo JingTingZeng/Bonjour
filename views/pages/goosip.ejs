@@ -78,14 +78,6 @@
           }
         })            
         
-        socket.on('user left',function(data){
-          $('#user_name li').remove();
-          for(var i=0;i<data.length;i++){
-              appendUser(data[i]);
-          }
-          // appendUser(data.username+" 已離開");
-          // removeUser(data.username);
-        });
         socket.on("sayToYou",function(fromuser,content){ 
           appendMessage(fromuser+" 私訊你 : "+content);
           // addMessage(fromuser,content);
@@ -127,12 +119,6 @@
         }
         function appendUser(user){
           $('#user_name').append($('<li id='+ user +'>'+ user +'</li>'));
-          // $('#user_name').append($('<li>').text(user));
-          var user = document.getElementById("user");
-          user.scrollTop = user.scrollHeight;
-        }
-        function removeUser(user){
-          $('#'+user).remove();
           // $('#user_name').append($('<li>').text(user));
           var user = document.getElementById("user");
           user.scrollTop = user.scrollHeight;
