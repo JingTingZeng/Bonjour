@@ -52,38 +52,38 @@ var config = {
  firebase.initializeApp(config);
  var database = firebase.database();
 
-database.ref('board/goosip/').update({
-	boardid:"b1",
-	boardname:"八卦版"
-});
-database.ref('board/sport/').update({
-	boardid:"b2",
-	boardname:"運動版"
-});
-database.ref('board/news/').update({
-	boardid:"b3",
-	boardname:"新聞版"
-});
-database.ref('board/fashion/').update({
-	boardid:"b4",
-	boardname:"時尚版"
-});
-database.ref('board/music/').update({
-	boardid:"b5",
-	boardname:"音樂版"
-});
-database.ref('board/game/').update({
-	boardid:"b6",
-	boardname:"遊戲版"
-});
-database.ref('board/movie/').update({
-	boardid:"b7",
-	boardname:"電影版"
-});
-database.ref('board/trip/').update({
-	boardid:"b8",
-	boardname:"旅遊版"
-});
+// database.ref('board/goosip/').update({
+// 	boardid:"b1",
+// 	boardname:"八卦版"
+// });
+// database.ref('board/sport/').update({
+// 	boardid:"b2",
+// 	boardname:"運動版"
+// });
+// database.ref('board/news/').update({
+// 	boardid:"b3",
+// 	boardname:"新聞版"
+// });
+// database.ref('board/fashion/').update({
+// 	boardid:"b4",
+// 	boardname:"時尚版"
+// });
+// database.ref('board/music/').update({
+// 	boardid:"b5",
+// 	boardname:"音樂版"
+// });
+// database.ref('board/game/').update({
+// 	boardid:"b6",
+// 	boardname:"遊戲版"
+// });
+// database.ref('board/movie/').update({
+// 	boardid:"b7",
+// 	boardname:"電影版"
+// });
+// database.ref('board/trip/').update({
+// 	boardid:"b8",
+// 	boardname:"旅遊版"
+// });
 
 app.get('/', function(req, res){
  	var note = "";
@@ -100,7 +100,7 @@ app.get('/', function(req, res){
 app.get('/index', function(req, res){
  	var note = "";
  	if(req.session.sign == true){
-		res.redirect('pages/index');
+		res.render('pages/index');
 		// res.render('pages/index');
 	}else{
 		res.render('pages/login',{
@@ -307,13 +307,13 @@ io.on('connection',function(socket){
 //取得登入表單資料
 app.post('/loginform', function(req, res){
 	console.log("id:"+req.body.login_id);
- 	console.log("pw:"+req.body.login_pw);
+ 	// console.log("pw:"+req.body.login_pw);
 
- 	database.ref('/user/').orderByChild("id").equalTo(req.body.login_id).on('value',function(snapshot){
+ 	database.ref('/user/').orderByChild("id").equalTo(req.body.login_id).on('child_added',function(snapshot){
  		var data = JSON.stringify(snapshot.val());  //將陣列轉換成字串
  		var result1  = data.indexOf("\"id\":\""+req.body.login_id+"\"");   //將陣列與ID進行比對
  		var result2  = data.indexOf("\"password\":\""+req.body.login_pw+"\"");   //將陣列與ID進行比對
- 		console.log("data:"+data);
+ 		// console.log("data:"+data);
  		console.log(result1+" & "+result2);
  		
  		if(result1 == -1 || result2 == -1){
@@ -343,41 +343,55 @@ app.post('/loginform', function(req, res){
 
 //取得註冊表單資料
 app.post('/logonform', function(req, res){
-	console.log(req.body.id);
- 	console.log(req.body.pw);
+	console.log("1."+req.body.id);
+ 	// console.log("2."+req.body.pw);
  
  	database.ref('/user/').orderByChild("id").equalTo(req.body.id).on('value',function(snapshot){
- 		var data = JSON.stringify(snapshot.val());  //將陣列轉換成字串
- 		var result  = data.indexOf("\"id\":\""+req.body.id+"\"");   //將陣列與輸入值進行比對
- 		console.log("\"id\":\""+req.body.id+"\"");
- 		console.log(data);
- 		console.log(result);
-
-		if(result !== -1){
-			console.log('ID已存在');
+ 		var data = snapshot.val()
+       	console.log("3."+data);
+ 		
+		if(data !== null){
+			console.log('4.ID已存在');
 		    var note = "--此ID已存在--";
 			res.render('pages/logon', {
 		        tagline: note
 		    });
-		}else{
-		    console.log('ID不存在');
+		    res.end();
+		    return;
+		}
+		return;
+	});
+	
+	database.ref('/user/').orderByChild("id").equalTo(req.body.id).on('value',function(snapshot){
+		var data = snapshot.val()
+       	console.log("5."+data);
+
+		if(data == null){
+		// else{
+		    console.log('6.ID不存在');
 		    req.session.sign = true;
 			req.session.name = req.body.id;
-			console.log("session name:"+req.session.name);
-		    res.render('pages/index',{
-		    	loginid: req.session.name
-		    });
-		    
-			//將表單資料寫入資料庫
-		 	firebase.database().ref('user/').push({
-		        id: req.body.id,
-		        password: req.body.pw,
-		    }).key;
-		    console.log('ID已新建');
-		    return; 
+			console.log("7.session name:"+req.session.name);
+			   
+		    // res.render('pages/index');
+		    res.end('<a href='+'/login'+'>註冊成功,請重新登入</a>');
+		    reg(req.body.id, req.body.pw);	//寫入DB 
+		 	console.log("8.login ok");	      
+		    return;
 		}
+		return;
 	});
+	return;
 });
+
+//將表單資料寫入資料庫  
+function reg(id, pw){
+	firebase.database().ref('user/').push({
+		id: id,
+	    password: pw,
+	}).key;
+	console.log("9.db ok");
+};
 
 app.post('/backhome', function(req, res){
 	console.log("session sign:"+req.session.sign);
