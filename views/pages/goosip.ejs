@@ -75,8 +75,13 @@
         });
         //列出在線的人    
         socket.on('add user',function(data){
-          users.push(data.username);
-          appendUser(data.username);
+          for(i=0,i<users.length,i++){
+            if(user[i] !== data.username){
+              users.push(data.username);
+              appendUser(data.username);
+            }
+          }
+          
             
         });
         
