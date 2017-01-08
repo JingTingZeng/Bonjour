@@ -61,6 +61,7 @@
         
 
         //tell server
+        
         socket.emit("add user",name);
         
         
@@ -70,14 +71,15 @@
           addMessage(data.username,data.msg);
         });
         //列出在線的人 
-        $('#username').empty();   
+           
         socket.on('add user',function(data){
+          $('#username li').remove();
           users.push(data.username);
           // appendUser(data.username);
           for (var i = 0; i < users.length; i++) {
-              if(user[i] == data.username){
+              // if(user[i] !== data.username){
                 appendUser(users[i]);
-              }
+              // }
           }
           return false;
             
