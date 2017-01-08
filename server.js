@@ -254,12 +254,9 @@ io.on('connection',function(socket){
  	socket.on('add user',function(msg){
  		socket.username=msg;
  		user.name = socket.username;                    // 接收user name
-      	users.push(user); 
+      	users.push(socket.username); 
  		console.log("new user:"+msg+"logged.");
- 		io.emit('add user',{
- 			username:socket.username
- 		});
- 		users.push(msg);//在線上的
+ 		io.emit('usernames',users);
  	});
  	//監聽新訊息事件
  	//群聊

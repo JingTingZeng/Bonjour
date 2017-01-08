@@ -70,16 +70,12 @@
           appendMessage(data.username+" : "+data.msg);
           addMessage(data.username,data.msg);
         });
-        //列出在線的人            
-        socket.on('add user',function(data){
-          users.push(data.username);
-          //清空
-          $('#user_name li').remove();
-          // appendUser(data.username);
-          for (var i = 0; i < users.length; i++) {
-            appendUser(users[i]);
-          } 
-        });
+        //列出在線的人
+        socket.on('usernames',function(data){
+          for(var i=0;i<data.length;i++){
+              appendUser(data[i]);
+          }
+        })            
         
         socket.on('user left',function(data){
           // appendUser(data.username+" 已離開");
