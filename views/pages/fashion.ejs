@@ -69,12 +69,11 @@
           addMessage(data.username,data.msg);
         });
         //列出在線的人    
-        socket.on('add user',function(data){
-          users.push(data.username);
-          // appendUser(data.username);
-          for (var i = 0; i < users.length; i++) {
-            appendUser(users[i]);
-          }  
+        socket.on('usernames',function(data){
+          $('#user_name li').remove();
+          for(var i=0;i<data.length;i++){
+              appendUser(data[i]);
+          }
         });
         
         socket.on('user left',function(data){
