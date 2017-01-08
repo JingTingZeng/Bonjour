@@ -72,10 +72,10 @@
         });
         //列出在線的人            
         socket.on('add user',function(data){
+          users.push(data.username);
           //清空
           var list = document.getElementById("user_name");
           list.remove();
-          users.push(data.username);
           // appendUser(data.username);
           for (var i = 0; i < users.length; i++) {
             appendUser(users[i]);
@@ -85,6 +85,11 @@
         socket.on('user left',function(data){
           // appendUser(data.username+" 已離開");
           removeUser(data.username);
+          for (var i = 0; i < users.length; i++) {
+            if(user[i] == data.username){
+              delete user[i];
+            }
+          }
         });
         socket.on("sayToYou",function(fromuser,content){ 
           appendMessage(fromuser+" 私訊你 : "+content);
