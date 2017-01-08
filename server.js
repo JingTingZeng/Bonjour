@@ -32,6 +32,10 @@ var sess;
 //     }
 // }));
 
+//favicon設定
+app.use(favicon(__dirname + '/public/favicon.ico'));
+app.use(favicon(path.join(__dirname,'public','favicon.ico')));
+
 // 版型設定
 app.use(partials());
 app.set('views', path.join(__dirname, 'views'));
