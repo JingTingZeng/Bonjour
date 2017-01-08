@@ -72,12 +72,14 @@
         //列出在線的人    
         socket.on('add user',function(data){
           users.push(data.username);
-          appendUser(data.username);
+          $('#username li').remove();
+          // appendUser(data.username);
+          for (var i = 0; i < users.length; i++) {
+              appendUser(users[i]);
+          }
             
         });
-        for (var i = 0; i < users.length; i++) {
-              appendUser(users[i]);
-        }
+        
         socket.on('user left',function(data){
           // appendUser(data.username+" 已離開");
           removeUser(data.username);
