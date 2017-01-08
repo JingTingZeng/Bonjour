@@ -294,6 +294,7 @@ io.on('connection',function(socket){
  		io.emit('user left',{
  			username:socket.username
  		});
+ 		users.remove(socket.username)
  	});
 });
 
