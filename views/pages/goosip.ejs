@@ -74,12 +74,12 @@
            
         socket.on('add user',function(data){
           $('#user_name li').remove();
-          users.push(data.username);
           // appendUser(data.username);
           for (var i = 0; i < users.length; i++) {
-              // if(user[i] !== data.username){
+              if(user[i] !== data.username){
                 appendUser(users[i]);
-              // }
+                users.push(data.username);
+              }
           }
           return false;
             
