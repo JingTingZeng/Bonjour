@@ -42,7 +42,12 @@
     });
 	var socket = io();
   var users = new Array();
+
       $(document).ready(function(){
+
+        for (var i = 0; i < users.length; i++) {
+              appendUser(users[i]);
+        }
         // var name = prompt("請輸入你的名字","訪客");
         // if(name=="" || name==null){
         //   name = "訪客";
@@ -71,10 +76,8 @@
         //列出在線的人    
         socket.on('add user',function(data){
           users.push(data.username);
-          // appendUser(data.username);
-          for (var i = 0; i < users.length; i++) {
-            appendUser(users[i]);
-          }  
+          appendUser(data.username);
+            
         });
         
         socket.on('user left',function(data){
@@ -147,7 +150,6 @@
 			</div>
 			<div id="clear"></div>
 			<ul id="user_name">
-        <li></li>
       </ul>
 		</div>
     	<div id="message_block">
