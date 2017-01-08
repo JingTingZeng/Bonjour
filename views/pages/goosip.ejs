@@ -17,7 +17,7 @@
 	// 建立 DB
 	var database = firebase.database();
   function addSendMessage(senderName,username,msg){
-    database.ref('/user/').orderByChild("id").equalTo(senderName).ref('message/').push({
+    database.ref('/user/').orderByChild("id").equalTo(senderName).ref('/message/').set({
       // database.ref('/message/').push({
         username:username,
         msg:msg
