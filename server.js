@@ -247,17 +247,18 @@ app.get('/one', function(req, res){
 
 
 var users=new Array();
-
+var clients =new Array();
 //當新的使用者進入聊天室
 io.on('connection',function(socket){
-	var user = { 
+	var client = { 
 		Socket: socket,
 		name: '----'
     };
 	//新user
  	socket.on('add user',function(msg){
  		socket.username=msg;
- 		user.name = socket.username;                    // 接收user name
+ 		client.name = socket.username;
+ 		clients.push(client);
       	users.push(socket.username); 
  		console.log("new user:"+msg+"logged.");
  		io.emit('usernames',users);
@@ -276,9 +277,9 @@ io.on('connection',function(socket){
  	socket.on("say_private",function(fromuser,touser,msg){
         // console.log('I received a private message by ', fromuser, ' say to ',touser, msg);
         var toSocket = "";
-		for(var n in users){ 
-			if(users[n] === touser){     
-				toSocket = users[n].Socket;
+		for(var n in clients){ 
+			if(clients[n].name === touser){     
+				toSocket = clients[n].Socket;
 			}
 		} 
 		console.log("toSocket:  "+toSocket.id); 
