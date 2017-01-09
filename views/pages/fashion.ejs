@@ -16,6 +16,13 @@
 	firebase.initializeApp(config);
 	// 建立 DB
 	var database = firebase.database();
+  function addSendandRecieveMessage(senderName,username,msg){
+    database.ref('/user/message/').push({
+        senderName:senderName,
+        username:username,
+        msg:msg
+    });
+  }
 	function addBoardMember(userId){
 		database.ref('board/fashion/member/'+userId).push({
 			username:username
@@ -32,6 +39,35 @@
         $('#messages').append($('<li>').text(name+" : "+msg));
         var message = document.getElementById("message_block");
         message.scrollTop = message.scrollHeight;
+    }
+    function display_send_msg(id, name, msg){
+        $('#messages').append($('<li>').text("你私訊"+name+" : "+msg));
+        var message = document.getElementById("message_block");
+        message.scrollTop = message.scrollHeight;
+    }
+    function display_recieve_msg(id, name, msg){
+        $('#messages').append($('<li>').text(name+"私訊你 : "+msg));
+        var message = document.getElementById("message_block");
+        message.scrollTop = message.scrollHeight;
+    }
+    //私聊的訊息
+    function appendOneMessage(name){
+      // //撈自己的私訊(你傳的)
+      //   database.ref('user/message/').orderByChiid('senderName').equalTo(name).on('value',function(snapshot) {
+      //     var message = snapshot.val();
+      //     // $('#messages').empty();
+      //     $.each(snapshot.val(),function(k,v){
+      //         display_send_msg(k,v.username,v.msg);
+      //     });
+      //   });
+        //撈自己的私訊(你收到的)
+        database.ref('user/message/').orderByChild("username").equalTo(name).on('value',function(snapshot) {
+          var message = snapshot.val();
+          // $('#messages').empty();
+          $.each(snapshot.val(),function(k,v){
+              display_recieve_msg(k,v.senderName,v.msg);
+          });
+        });
     }
 	database.ref('board/fashion/message/').once('value').then(function(snapshot) {
             var message = snapshot.val();
@@ -57,7 +93,7 @@
         }
         console.log(rid);
         var name = rid;
-        
+        appendOneMessage(name);
 
         //tell server
         socket.emit("add user",name);
@@ -83,8 +119,9 @@
         socket.on("sayToYou",function(fromuser,content){ 
           appendMessage(fromuser+" 私訊你 : "+content);
         });
-        socket.on("say_private_done",function(touser,content){ 
+        socket.on("say_private_done",function(fromuser,touser,content){ 
           appendMessage("你已私訊"+touser+" : "+content);
+          addSendandRecieveMessage(fromuser,touser,content);
         });
         $('#send').click(function(){
           var content = $("#m").val();   //獲得消息

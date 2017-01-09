@@ -247,7 +247,7 @@ app.get('/one', function(req, res){
 
 
 var users=new Array();
-var clients =new Array();
+var clients=new Array();
 //當新的使用者進入聊天室
 io.on('connection',function(socket){
 	var client = { 
@@ -284,7 +284,7 @@ io.on('connection',function(socket){
 		} 
 		console.log("toSocket:  "+toSocket.id); 
     	if(toSocket != ""){  
-       	 	socket.emit("say_private_done",touser,msg);   //訊息返回给fromuser
+       	 	socket.emit("say_private_done",fromuser,touser,msg);   //訊息返回给fromuser
         	toSocket.emit("sayToYou",fromuser,msg);     // 訊息返回给 touser
         	console.log(fromuser+" 给 "+touser+"發了訊息： "+msg); 
     	}  
@@ -372,6 +372,7 @@ app.post('/logonform', function(req, res){
 		    console.log('6.ID不存在');
 		    req.session.sign = true;
 			req.session.name = req.body.id;
+// <<<<<<< HEAD
 			console.log("7.session name:"+req.session.name);
 			   
 		    // res.render('pages/index');
@@ -379,6 +380,20 @@ app.post('/logonform', function(req, res){
 		    reg(req.body.id, req.body.pw);	//寫入DB 
 		 	console.log("8.login ok");	      
 		    return;
+// =======
+// 			console.log("session name:"+req.session.name);
+// 		    res.render('pages/index',{
+// 		    	loginid: req.session.name
+// 		    });
+		    
+// 			//將表單資料寫入資料庫
+// 		 	firebase.database().ref('user/').push({
+// 		        id: req.body.id,
+// 		        password: req.body.pw
+// 		    }).key;
+// 		    console.log('ID已新建');
+// 		    return; 
+// >>>>>>> bug
 		}
 		return;
 	});
