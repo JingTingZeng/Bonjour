@@ -243,17 +243,18 @@ app.get('/one', function(req, res){
 
 
 var users=new Array();
-
+var clients=new Array();
 //當新的使用者進入聊天室
 io.on('connection',function(socket){
-	var user = { 
+	var client = { 
 		Socket: socket,
 		name: '----'
     };
 	//新user
  	socket.on('add user',function(msg){
  		socket.username=msg;
- 		user.name = socket.username;                    // 接收user name
+ 		client.name = socket.username;
+ 		clients.push(client);
       	users.push(socket.username); 
  		console.log("new user:"+msg+"logged.");
  		io.emit('usernames',users);
@@ -272,14 +273,14 @@ io.on('connection',function(socket){
  	socket.on("say_private",function(fromuser,touser,msg){
         // console.log('I received a private message by ', fromuser, ' say to ',touser, msg);
         var toSocket = "";
-		for(var n in users){ 
-			if(users[n].name === touser){     
-				toSocket = users[n].Socket;
+		for(var n in clients){ 
+			if(clients[n].name === touser){     
+				toSocket = clients[n].Socket;
 			}
 		} 
 		console.log("toSocket:  "+toSocket.id); 
     	if(toSocket != ""){  
-       	 	socket.emit("say_private_done",touser,msg);   //訊息返回给fromuser
+       	 	socket.emit("say_private_done",fromuser,touser,msg);   //訊息返回给fromuser
         	toSocket.emit("sayToYou",fromuser,msg);     // 訊息返回给 touser
         	console.log(fromuser+" 给 "+touser+"發了訊息： "+msg); 
     	}  
