@@ -120,7 +120,7 @@
           appendMessage(fromuser+" 私訊你 : "+content);
           // addMessage(fromuser,content);
         });
-        socket.on("say_private_done",function(,fromuser,touser,content){ 
+        socket.on("say_private_done",function(fromuser,touser,content){ 
           appendMessage("你已私訊"+touser+" : "+content);
           addSendandRecieveMessage(fromuser,touser,content);
         });
