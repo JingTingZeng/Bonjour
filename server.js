@@ -372,7 +372,6 @@ app.post('/logonform', function(req, res){
 		    console.log('6.ID不存在');
 		    req.session.sign = true;
 			req.session.name = req.body.id;
-// <<<<<<< HEAD
 			console.log("7.session name:"+req.session.name);
 			   
 		    // res.render('pages/index');
@@ -380,20 +379,6 @@ app.post('/logonform', function(req, res){
 		    reg(req.body.id, req.body.pw);	//寫入DB 
 		 	console.log("8.login ok");	      
 		    return;
-// =======
-// 			console.log("session name:"+req.session.name);
-// 		    res.render('pages/index',{
-// 		    	loginid: req.session.name
-// 		    });
-		    
-// 			//將表單資料寫入資料庫
-// 		 	firebase.database().ref('user/').push({
-// 		        id: req.body.id,
-// 		        password: req.body.pw
-// 		    }).key;
-// 		    console.log('ID已新建');
-// 		    return; 
-// >>>>>>> bug
 		}
 		return;
 	});

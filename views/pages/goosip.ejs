@@ -98,7 +98,7 @@
         
         //監聽新訊息事件
         socket.on('chat message', function(data){
-          // appendMessage(data.username+" : "+data.msg);
+          appendMessage(data.username+" : "+data.msg);
           addMessage(data.username,data.msg);
         });
 
