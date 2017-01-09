@@ -277,7 +277,7 @@ io.on('connection',function(socket){
         // console.log('I received a private message by ', fromuser, ' say to ',touser, msg);
         var toSocket = "";
 		for(var n in users){ 
-			if(users[n].name === touser){     
+			if(users[n] === touser){     
 				toSocket = users[n].Socket;
 			}
 		} 
